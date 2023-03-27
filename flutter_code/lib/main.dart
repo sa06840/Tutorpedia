@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_code/screens/dashboard.dart';
+import 'package:flutter_code/screens/login_screen.dart';
+import 'package:flutter_code/screens/signup_screen.dart';
+import 'package:flutter_code/utils/routes.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 void main(){
@@ -6,18 +11,26 @@ void main(){
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Material(
-        child: Center(
-          child: Container(
-            child: Text("Welcome to Tutorpedia"),
-          ),
-        ),
+      themeMode: ThemeMode.light,
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+        fontFamily: GoogleFonts.lato().fontFamily,
       ),
+      // debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+      ),
+      // initialRoute: "/",
+      routes: {
+        "/": (context) => SignupScreen(),
+        MyRoutes.signupRoute: (context) => SignupScreen(),
+        MyRoutes.dashboardRoute: (context) => DashBaord(),
+        MyRoutes.loginRoute: (context) => LoginScreen(),
+      },
     );
   }
 }
