@@ -2,11 +2,131 @@ import 'package:flutter/material.dart';
 import 'package:flutter_code/utils/routes.dart';
 
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
   @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+
+  final _formKey = GlobalKey<FormState>();
+   // editing Controller
+  final firstNameEditingController = TextEditingController();
+  final secondNameEditingController = TextEditingController();
+  final emailEditingController = TextEditingController();
+  final passwordEditingController = TextEditingController();
+  final confirmPasswordEditingController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+
+    // first name field
+    final firstNameField = TextFormField(
+      validator: (value) {
+        RegExp regex = RegExp(r'^.{3,}$');
+          if (value!.isEmpty) {
+            return ("First Name cannot be Empty");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Enter Valid name(Min. 3 Character)");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          firstNameEditingController.text = value!;
+        },
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            color: Color.fromARGB(225, 25, 28, 50),
+            width: 2.0,
+          )
+        ),
+        hintText: "First Name"
+      ),
+    );
+
+
+    // email name
+    final emailField = TextFormField(
+      validator: (value) {
+          if (value!.isEmpty) {
+            return ("Please Enter Your Email");
+          }
+          // reg expression for email validation
+          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+              .hasMatch(value)) {
+            return ("Please Enter a valid email");
+          }
+          return null;
+      },
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            color: Color.fromARGB(225, 25,28,50),
+            width: 2.0,
+          )
+        ),
+        hintText: "Email Address",
+      ),
+    );
+
+    //student code field
+    final studentCodeField = TextFormField(
+      validator: (value) {
+          RegExp regex = RegExp(r"^.{4,}$");
+          if (value!.isEmpty) {
+            return ("Student Code is required for login");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Enter Valid Student Code(Min. 6 Character)");
+          }
+      },
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            color: Color.fromARGB(225, 25,28,50),
+            width: 2.0,
+          )
+        ),
+        hintText: "Student Code",
+      ),
+    );
+
+    // password field
+    final passwordField = TextFormField(
+      validator: (value) {
+          RegExp regex = RegExp(r"^.{6,}$");
+          if (value!.isEmpty) {
+            return ("Password is required for login");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Enter Valid Password(Min. 6 Character)");
+          }
+      },
+      obscureText: true,
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            color: Color.fromARGB(225, 25,28,50),
+            width: 2.0,
+          )
+        ),
+        hintText: "Password",
+      ),
+    );
+
+
     return Material(
       child: Container(
         decoration: BoxDecoration(
@@ -29,7 +149,7 @@ class SignupScreen extends StatelessWidget {
                 SizedBox(height: 100.0),
                 Image.asset(
                   "assets/images/logo.png",
-                  scale: 2.0,
+                  scale: 3.0,
                 ),
                 SizedBox(height: 20.0),
                 Text(
@@ -40,60 +160,28 @@ class SignupScreen extends StatelessWidget {
                     color: Color.fromARGB(255, 25,28,50)
                   ),
                 ),
-                SizedBox(height:20.0),
+                // SizedBox(height:20.0),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(35.0, 30, 35.0, 0.0),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(183, 25, 28, 50),
-                              width: 2.0,
-                            )
-                          ),
-                          hintText: "Username"
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(183, 25,28,50),
-                              width: 2.0,
-                            )
-                          ),
-                          hintText: "Password",
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(183, 25,28,50),
-                              width: 2.0,
-                            )
-                          ),
-                          hintText: "Student Code",
-                        ),
-                      ),
-                    ],
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        firstNameField,
+                        SizedBox(height: 10.0),
+                        emailField,
+                        SizedBox(height: 10.0),
+                        studentCodeField,
+                        SizedBox(height: 10),
+                        passwordField,
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 25),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, MyRoutes.loginRoute);
+                    signUp();
                   },
                   child: Text(
                     "Sign Up",
@@ -117,5 +205,27 @@ class SignupScreen extends StatelessWidget {
         ),
       ),
     );
+
   }
+
+  dynamic Progress_bar() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog( // <-- SEE HERE
+        title: const Text('Authenticating... Please Wait'),
+        );
+      }
+    );
+  }
+
+  void signUp() {
+    if (_formKey.currentState!.validate()) {
+      Progress_bar();
+      Navigator.pushNamed(context, MyRoutes.loginRoute);
+    }
+  }
+
+
 }

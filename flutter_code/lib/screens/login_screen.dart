@@ -8,6 +8,38 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // username field
+    final usernameField =  TextFormField(
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            color: Color.fromARGB(225, 25,28,50),
+            width: 2.0,
+          )
+        ),
+        hintText: "Username"
+      ),
+    );
+
+    // password field
+    final passwordField = TextFormField(
+      obscureText: true,
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            style: BorderStyle.solid,
+            color: Color.fromARGB(225, 25,28,50),
+            width: 2.0,
+          )
+        ),
+        hintText: "Password",
+      ),
+    );
+
     return Material(
       child: Container(
         decoration: BoxDecoration(
@@ -46,34 +78,9 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(35.0, 30, 35.0, 0.0),
                   child: Column(
                     children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(183, 25,28,50),
-                              width: 2.0,
-                            )
-                          ),
-                          hintText: "Username"
-                        ),
-                      ),
+                      usernameField,
                       SizedBox(height: 10.0),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(183, 25,28,50),
-                              width: 2.0,
-                            )
-                          ),
-                          hintText: "Password",
-                        ),
-                      ),
+                      passwordField,
                     ],
                   ),
                 ),
