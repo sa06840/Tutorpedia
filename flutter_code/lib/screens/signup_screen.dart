@@ -82,7 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
       validator: (value) {
           RegExp regex = RegExp(r"^.{4,}$");
           if (value!.isEmpty) {
-            return ("Student Code is required for login");
+            return ("Student Code is required for sign up");
           }
           if (!regex.hasMatch(value)) {
             return ("Enter Valid Student Code(Min. 6 Character)");
@@ -106,7 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
       validator: (value) {
           RegExp regex = RegExp(r"^.{6,}$");
           if (value!.isEmpty) {
-            return ("Password is required for login");
+            return ("Password is required for sign up");
           }
           if (!regex.hasMatch(value)) {
             return ("Enter Valid Password(Min. 6 Character)");
