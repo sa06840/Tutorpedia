@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_code/widgets/announcementsSlider.dart';
 import 'package:flutter_code/models/announcementsModel.dart';
 import 'package:flutter_code/widgets/attendanceCounter.dart';
+import 'package:flutter_code/widgets/navigationWidget.dart';
+
 
 class DashBaord extends StatelessWidget {
   const DashBaord({super.key});
@@ -90,6 +92,7 @@ class DashBaord extends StatelessWidget {
                 SizedBox(height: 25.0,),
                 AnnoucementsSlider(),
                 AttendanceCounter(),
+                NavWidget(),
               ]
             ),
           )

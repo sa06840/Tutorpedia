@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_code/models/attendanceModel.dart';
 
 class AttendanceCounter extends StatefulWidget {
   const AttendanceCounter({super.key});
@@ -16,7 +17,7 @@ class _AttendanceCounterState extends State<AttendanceCounter> {
       child: Padding(
         padding: EdgeInsets.fromLTRB(12.0,0,12.0,0),
         child: Container(
-          height: 160,
+          height: 155,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -82,16 +83,29 @@ class _AttendanceCounterState extends State<AttendanceCounter> {
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         color: Color.fromARGB(255, 114,87,192),
                       ),
-                      alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Text(
-                          "Present",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white
-                          ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0,10,0,5),
+                              child: Text(
+                                "${std.present}",
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  color: Colors.white
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "Present",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -102,16 +116,29 @@ class _AttendanceCounterState extends State<AttendanceCounter> {
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         color: Color.fromARGB(255, 114,87,192),
                       ),
-                      alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Text(
-                          "Absent",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white
-                          ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0,10,0,5),
+                              child: Text(
+                                "${std.absent}",
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  color: Colors.white
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "Absent",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -122,16 +149,29 @@ class _AttendanceCounterState extends State<AttendanceCounter> {
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         color: Color.fromARGB(255, 114,87,192),
                       ),
-                      alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Text(
-                          "Late",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white
-                          ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0,10,0,5),
+                              child: Text(
+                                "${std.lateArrival}",
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  color: Colors.white
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "Late",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
