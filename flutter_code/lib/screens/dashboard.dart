@@ -48,17 +48,17 @@ class DashBaord extends StatelessWidget {
     return Material(
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 243,243,247)
-          // gradient: LinearGradient(
-          //   begin: Alignment.topRight,
-          //   end: Alignment.bottomLeft,
-          //   colors: [
-          //     Color.fromARGB(255, 244, 169, 203),
-          //     Color.fromARGB(255, 235, 235, 235),
-          //     Colors.white,
-          //     Color.fromARGB(255, 247, 222, 203),
-          //   ]
-          // )
+          // color: Color.fromARGB(255, 243,243,247)
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 244, 169, 203),
+              Color.fromARGB(255, 235, 235, 235),
+              Colors.white,
+              Color.fromARGB(255, 247, 222, 203),
+            ]
+          )
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
