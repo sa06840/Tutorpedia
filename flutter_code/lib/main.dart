@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
       ),
       // initialRoute: "/",
       routes: {
-        "/": (context) => DashBaord(),
+        "/": (context) => DashBoard(),
         MyRoutes.signupRoute: (context) => SignupScreen(),
-        MyRoutes.dashboardRoute: (context) => DashBaord(),
+        MyRoutes.dashboardRoute: (context) => DashBoard(),
         MyRoutes.loginRoute: (context) => LoginScreen(),
       },
     );

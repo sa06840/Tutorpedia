@@ -19,7 +19,7 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -57,7 +57,7 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
                 return Container(
                   margin: EdgeInsets.all(10.0),
                   width: 210.0,
-                  color: Colors.transparent,
+                  color: Color.fromARGB(0, 0, 0, 0),
                   child: Stack(
                     children: <Widget>[
                       Positioned(
@@ -97,6 +97,8 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
                                     color: Colors.grey,
                                     fontSize: 12.0,
                                   ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             ),

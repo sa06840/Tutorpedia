@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code/widgets/announcementsSlider.dart';
 import 'package:flutter_code/models/announcementsModel.dart';
+import 'package:flutter_code/widgets/attendanceAssignments.dart';
 import 'package:flutter_code/widgets/attendanceCounter.dart';
-import 'package:flutter_code/widgets/navigationWidget.dart';
 
 
-class DashBaord extends StatelessWidget {
-  const DashBaord({super.key});
+class DashBoard extends StatelessWidget {
+  const DashBoard({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    final className =  Text(
-      "CLASS NAME",
-      style: TextStyle(
-        fontSize: 30.0,
-        color: Colors.black
-        // color: Color.fromARGB(255, 143,68,192)
-        // fontWeight: FontWeight.bold
+    final className =  Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 36.0),
+        child: Text(
+          "CLASS NAME",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black
+          ),
+        ),
       ),
     );
 
@@ -67,15 +71,30 @@ class DashBaord extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding:  EdgeInsets.fromLTRB(0.0,50.0,0.0,0.0),
+                  padding:  EdgeInsets.fromLTRB(0.0,50,0.0,0.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [],
                   ),
                 ),
                 SizedBox(height: 25.0),
-                className,
-                SizedBox(height:25.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    className,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }, 
+                        icon: Icon(Icons.logout_rounded, size: 35,)
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height:18.0),
                 Column(
                   children: [
                     image,
@@ -89,10 +108,9 @@ class DashBaord extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: 25.0,),
+                SizedBox(height: 18.0,),
                 AnnoucementsSlider(),
-                AttendanceCounter(),
-                NavWidget(),
+                AttendanceAssignments(),
               ]
             ),
           )

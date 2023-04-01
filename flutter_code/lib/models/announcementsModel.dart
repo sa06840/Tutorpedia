@@ -15,7 +15,7 @@ List<Announcement> announcements = [
   Announcement(
     header: 'Announcement 1', 
     date: 'March 25, 2023', 
-    body: 'jncjwniucen newncucni nwciniuc icuencunce'
+    body: 'jncjwniucen newncucni nwciniuc icuencunce cbkbcew jncjecec ionoejwncec   oncenc iocnoue'
   ),
   Announcement(
     header: 'Announcement 2', 
