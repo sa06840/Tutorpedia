@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_code/services/auth/auth_exceptions.dart';
+import 'package:flutter_code/services/auth/auth_service.dart';
 import 'package:flutter_code/utils/routes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_code/utils/show_error_dialog.dart';
 import 'package:flutter_code/screens/verify_email_view.dart';
 
@@ -15,10 +17,10 @@ class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   // editing Controller
   final firstNameEditingController = TextEditingController();
-  final secondNameEditingController = TextEditingController();
-  final emailEditingController = TextEditingController();
-  final passwordEditingController = TextEditingController();
-  final confirmPasswordEditingController = TextEditingController();
+  // final secondNameEditingController = TextEditingController();
+  // final emailEditingController = TextEditingController();
+  // final passwordEditingController = TextEditingController();
+  // final confirmPasswordEditingController = TextEditingController();
 
   late final TextEditingController _email;
   late final TextEditingController _password;
@@ -197,33 +199,30 @@ class _SignupScreenState extends State<SignupScreen> {
                     final email = _email.text;
                     final password = _password.text;
                     try {
-                      await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                              email: email, password: password);
-                      final user = FirebaseAuth.instance.currentUser;
-                      await user?.sendEmailVerification();
+                      await AuthService.firebase().createUser(
+                        email: email,
+                        password: password,
+                      );
+                      final user = AuthService.firebase().currentUser;
+                      AuthService.firebase().sendEmailVerification();
                       Navigator.of(context).pushNamed(verifyEmailRoute);
                       // Navigator.of(context).pushNamed(loginRoute);
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password') {
+                    } on WeakPasswordAuthException{
                        await showErrorDialog(context, "Weak Password");
-                      } else if (e.code == 'email-already-in-use') {
-                        await showErrorDialog(context, "Email is already in use");
-                      } else if (e.code == 'invalid-email') {
-                        await showErrorDialog(
+                    }on EmailAlreadyInUseAuthException{
+                       await showErrorDialog(
+                            context, "Email is already in use");
+                    }on InvalidEmailAuthException{
+                      await showErrorDialog(
                             context, "This is an invalid email address");
-                      } else {
-                        await showErrorDialog(
-                          context,
-                          "Error: ${e.code}",
-                        );
-                      }
-                    } catch (e) {
+                    }on GenericAuthException{
                       await showErrorDialog(
                         context,
-                        e.toString(),
+                        'Failed to Register',
                       );
                     }
+                   
+                      
                   },
                   child: Text(
                     "Sign Up",
