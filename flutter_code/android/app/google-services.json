@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1062727640974",
+    "project_id": "tutorpedia-se-project",
+    "storage_bucket": "tutorpedia-se-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062727640974:android:eb938ef09a3b3386d166df",
+        "android_client_info": {
+          "package_name": "com.example.flutter_code"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062727640974-95mpf07bf75jt9abkl8s85s85enfv0h6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHa_eAfpdv8iKiZg8OmDnpwpuzJKYNy38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062727640974-95mpf07bf75jt9abkl8s85s85enfv0h6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1062727640974-j4pcal72h825kkn3cufnjiqd16u6fgd4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterCode"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

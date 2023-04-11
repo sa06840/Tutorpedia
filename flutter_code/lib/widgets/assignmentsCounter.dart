@@ -2,6 +2,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/models/studentModel.dart';
+import 'package:flutter_code/screens/assignments_corrections.dart';
 
 class AssignmentsCounter extends StatefulWidget {
   const AssignmentsCounter({super.key});
@@ -39,7 +40,13 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AssignmentsAndCorrectionsScreen()),
+                      );
+                    },
                       child: Text(
                         "My Inbox",
                         style: TextStyle(
@@ -48,30 +55,30 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
                         ),
                       ),
                     ),
-                    // Container(
-                    //   height: 35.0,
-                    //   width: 175,
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                    //     color: Color.fromARGB(255, 243,223,254),
-                    //     // boxShadow: [
-                    //       // BoxShadow(
-                    //       //   color: Colors.black26,
-                    //       //   offset: Offset(0.0, 2.0),
-                    //       //   blurRadius: 6.0,
-                    //       // ),
-                    //     // ],
-                    //   ),
-                    //   child: Center(
-                    //     child: Text(
-                    //       "Date till Today",
-                    //       style: TextStyle(
-                    //         fontSize: 16.0,
-                    //       ),
-                    //       textAlign: TextAlign.center,
-                    //     ),
-                    //   ),
-                    // )
+                    Container(
+                      height: 35.0,
+                      width: 175,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                        color: Color.fromARGB(255, 243,223,254),
+                        // boxShadow: [
+                          // BoxShadow(
+                          //   color: Colors.black26,
+                          //   offset: Offset(0.0, 2.0),
+                          //   blurRadius: 6.0,
+                          // ),
+                        // ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Date till Today",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

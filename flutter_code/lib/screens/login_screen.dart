@@ -1,7 +1,9 @@
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/utils/routes.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_code/utils/show_error_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,36 +13,107 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late final TextEditingController _email;
+  late final TextEditingController _password;
+
+  @override
+  void initState() {
+    _email = TextEditingController();
+    _password = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // // username field
+    // final usernameField =  TextFormField(
+    //   decoration: InputDecoration(
+    //     enabledBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10.0),
+    //       borderSide: BorderSide(
+    //         style: BorderStyle.solid,
+    //         color: Color.fromARGB(225, 25,28,50),
+    //         width: 2.0,
+    //       )
+    //     ),
+    //     hintText: "Username"
+    //   ),
+    // );
 
-    // username field
-    final usernameField =  TextFormField(
+    // // password field
+    // final passwordField = TextFormField(
+    //   obscureText: true,
+    //   decoration: InputDecoration(
+    //     enabledBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10.0),
+    //       borderSide: BorderSide(
+    //         style: BorderStyle.solid,
+    //         color: Color.fromARGB(225, 25,28,50),
+    //         width: 2.0,
+    //       )
+    //     ),
+    //     hintText: "Password",
+    //   ),
+    // );
+
+    // email name
+    final emailField = TextFormField(
+      controller: _email,
+      enableSuggestions: false,
+      autocorrect: false,
+      keyboardType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return ("Please Enter a valid email");
+        }
+        return null;
+      },
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(
-            style: BorderStyle.solid,
-            color: Color.fromARGB(225, 25,28,50),
-            width: 2.0,
-          )
-        ),
-        hintText: "Username"
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              style: BorderStyle.solid,
+              color: Color.fromARGB(225, 25, 28, 50),
+              width: 2.0,
+            )),
+        hintText: "Email Address",
       ),
     );
 
     // password field
     final passwordField = TextFormField(
+      enableSuggestions: false,
+      autocorrect: false,
+      controller: _password,
+      validator: (value) {
+        RegExp regex = RegExp(r"^.{6,}$");
+        if (value!.isEmpty) {
+          return ("Password is required for sign up");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Enter Valid Password(Min. 6 Character)");
+        }
+      },
       obscureText: true,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(
-            style: BorderStyle.solid,
-            color: Color.fromARGB(225, 25,28,50),
-            width: 2.0,
-          )
-        ),
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              style: BorderStyle.solid,
+              color: Color.fromARGB(225, 25, 28, 50),
+              width: 2.0,
+            )),
         hintText: "Password",
       ),
     );
@@ -48,17 +121,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return Material(
       child: Container(
         decoration: BoxDecoration(
-              gradient: LinearGradient(
+            gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Color.fromARGB(255, 244, 169, 203),
-                  Color.fromARGB(255, 235, 235, 235),
-                  Colors.white,
-                  Color.fromARGB(255, 247, 222, 203)
-                ]
-              )
-            ),
+              Color.fromARGB(255, 244, 169, 203),
+              Color.fromARGB(255, 235, 235, 235),
+              Colors.white,
+              Color.fromARGB(255, 247, 222, 203)
+            ])),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
@@ -73,17 +144,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   "Tutorpedia",
                   style: TextStyle(
-                    fontSize: 50.0,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 25,28,50)
-                  ),
+                      fontSize: 50.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 25, 28, 50)),
                 ),
-                SizedBox(height:20.0),
+                SizedBox(height: 20.0),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(35.0, 30, 35.0, 0.0),
                   child: Column(
                     children: [
-                      usernameField,
+                      // usernameField,
+                      emailField,
                       SizedBox(height: 10.0),
                       passwordField,
                     ],
@@ -91,47 +162,83 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 25),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, MyRoutes.dashboardRoute);
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    try {
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
+                      // Navigator.pushNamed(context, dashboardRoute);
+                      final user = FirebaseAuth.instance.currentUser;
+                      if (user?.emailVerified ?? false){
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                          dashboardRoute, (route) => false,);
+                      }
+                      else{
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                          verifyEmailRoute, (route) => false,);
+                      }
+                     
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        await showErrorDialog(
+                          context,
+                          "user not found",
+                        );
+                      } else if (e.code == 'wrong-password') {
+                        await showErrorDialog(
+                          context,
+                          "Incorrect Password ",
+                        );
+                      } else {
+                        await showErrorDialog(
+                          context,
+                          "Error: ${e.code}",
+                        );
+                      }
+                    } catch (e) {
+                      await showErrorDialog(
+                        context,
+                        e.toString(),
+                      );
+                    }
                   },
                   child: Text(
                     "Login",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold
-                    ),
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                   style: TextButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 25,28,50),
-                    padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    )
-                  ),
+                      backgroundColor: Color.fromARGB(255, 25, 28, 50),
+                      padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
                 ),
                 SizedBox(height: 25.0),
                 RichText(
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "Don't have an Account? ",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Color.fromARGB(255, 25,28,50),
-                        )
-                      ),
+                          text: "Don't have an Account? ",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Color.fromARGB(255, 25, 28, 50),
+                          )),
                       TextSpan(
-                        text: "Register Now!",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 25,28,50),
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pop(context);
-                        }
-                      ),
+                          text: "Register Now!",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 25, 28, 50),
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  signupRoute, (route) => false);
+                              // Navigator.pop(context);
+                            }),
                     ],
                   ),
                 ),

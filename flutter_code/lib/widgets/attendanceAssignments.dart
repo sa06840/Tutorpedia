@@ -16,25 +16,19 @@ class _AttendanceAssignmentsState extends State<AttendanceAssignments> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
-      child: CarouselSlider(
-        items: [
-          AttendanceCounter(),
-          AssignmentsCounter()
-        ], 
-        options: CarouselOptions(
-          height: 250,
-          padEnds: false,
-          // enlargeCenterPage: true,
-          // autoPlay: true,
-          // aspectRatio: 16 / 9,
-          // autoPlayCurve: Curves.fastOutSlowIn,
-          enableInfiniteScroll: false,
-          // autoPlayAnimationDuration: Duration(milliseconds: 800),
-          viewportFraction: 0.8,
-          scrollDirection: Axis.vertical
-        )
-      )
-    );
+        color: Colors.transparent,
+        child: CarouselSlider(
+            items: [AttendanceCounter(), AssignmentsCounter()],
+            options: CarouselOptions(
+                height: 250,
+                padEnds: false,
+                // enlargeCenterPage: true,
+                // autoPlay: true,
+                // aspectRatio: 16 / 9,
+                // autoPlayCurve: Curves.fastOutSlowIn,
+                enableInfiniteScroll: false,
+                // autoPlayAnimationDuration: Duration(milliseconds: 800),
+                viewportFraction: 0.8,
+                scrollDirection: Axis.vertical)));
   }
 }
