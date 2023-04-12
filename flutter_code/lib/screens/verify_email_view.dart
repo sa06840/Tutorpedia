@@ -17,6 +17,12 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       appBar: AppBar(title: const Text("Verify Email")),
       body: Column(
         children: [
+          Image.asset(
+            'assets/images/verify_email.png',
+            height: MediaQuery.of(context).size.height * 0.3,
+          ),
+          const SizedBox(height: 24.0),
+        
           const Text(
               "We've sent you an email verfication. Please open it to verify your account."),
           const Text(

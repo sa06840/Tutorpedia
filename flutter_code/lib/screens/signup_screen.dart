@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/services/auth/auth_exceptions.dart';
 import 'package:flutter_code/services/auth/auth_service.dart';
@@ -24,11 +25,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final TextEditingController _firstName;
+  late final TextEditingController _studentCode;
 
   @override
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    _firstName = TextEditingController();
+    _studentCode = TextEditingController();
     super.initState();
   }
 
@@ -36,6 +41,8 @@ class _SignupScreenState extends State<SignupScreen> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _firstName.dispose();
+    _studentCode.dispose();
     super.dispose();
   }
 
@@ -207,22 +214,19 @@ class _SignupScreenState extends State<SignupScreen> {
                       AuthService.firebase().sendEmailVerification();
                       Navigator.of(context).pushNamed(verifyEmailRoute);
                       // Navigator.of(context).pushNamed(loginRoute);
-                    } on WeakPasswordAuthException{
-                       await showErrorDialog(context, "Weak Password");
-                    }on EmailAlreadyInUseAuthException{
-                       await showErrorDialog(
-                            context, "Email is already in use");
-                    }on InvalidEmailAuthException{
+                    } on WeakPasswordAuthException {
+                      await showErrorDialog(context, "Weak Password");
+                    } on EmailAlreadyInUseAuthException {
+                      await showErrorDialog(context, "Email is already in use");
+                    } on InvalidEmailAuthException {
                       await showErrorDialog(
-                            context, "This is an invalid email address");
-                    }on GenericAuthException{
+                          context, "This is an invalid email address");
+                    } on GenericAuthException {
                       await showErrorDialog(
                         context,
                         'Failed to Register',
                       );
                     }
-                   
-                      
                   },
                   child: Text(
                     "Sign Up",
@@ -235,7 +239,32 @@ class _SignupScreenState extends State<SignupScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
-                SizedBox(height: 50.0),
+                SizedBox(height: 20.0),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: "Already have an Account? ",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Color.fromARGB(255, 25, 28, 50),
+                          )),
+                      TextSpan(
+                          text: "Register here!",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 25, 28, 50),
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  loginRoute, (route) => false);
+                              // Navigator.pop(context);
+                            }),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

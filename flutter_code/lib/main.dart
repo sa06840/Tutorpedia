@@ -60,7 +60,7 @@ void main() {
       ),
     home: const HomePage(),
     routes: {
-      signupRoute: (context) => SignupScreen(),
+       signupRoute: (context) => SignupScreen(),
         dashboardRoute: (context) => DashBoard(),
         loginRoute: (context) => LoginScreen(),
         verifyEmailRoute: (context) => VerifyEmailView(),
@@ -86,6 +86,7 @@ class HomePage extends StatelessWidget {
                 return const VerifyEmailView();
               }
             } else {
+              // return const VerifyEmailView();
               return const LoginScreen();
             }
           default:
