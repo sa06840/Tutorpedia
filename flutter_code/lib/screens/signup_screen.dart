@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_code/models/parentModel.dart';
 import 'package:flutter_code/services/auth/auth_exceptions.dart';
 import 'package:flutter_code/services/auth/auth_service.dart';
 import 'package:flutter_code/utils/routes.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_code/utils/show_error_dialog.dart';
 import 'package:flutter_code/screens/verify_email_view.dart';
+
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -17,7 +21,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   // editing Controller
-  final firstNameEditingController = TextEditingController();
+  // final firstNameEditingController = TextEditingController();
   // final secondNameEditingController = TextEditingController();
   // final emailEditingController = TextEditingController();
   // final passwordEditingController = TextEditingController();
@@ -50,6 +54,9 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     // first name field
     final firstNameField = TextFormField(
+       controller: _firstName,
+      enableSuggestions: false,
+      autocorrect: false,
       validator: (value) {
         RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
@@ -61,7 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
         return null;
       },
       onSaved: (value) {
-        firstNameEditingController.text = value!;
+        _firstName.text = value!;
       },
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -90,6 +97,9 @@ class _SignupScreenState extends State<SignupScreen> {
         }
         return null;
       },
+      onSaved: (value) {
+        _email.text = value!;
+      },
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -104,6 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
     //student code field
     final studentCodeField = TextFormField(
+      controller: _studentCode,
       validator: (value) {
         RegExp regex = RegExp(r"^.{4,}$");
         if (value!.isEmpty) {
@@ -112,6 +123,9 @@ class _SignupScreenState extends State<SignupScreen> {
         if (!regex.hasMatch(value)) {
           return ("Enter Valid Student Code(Min. 6 Character)");
         }
+      },
+      onSaved: (value) {
+        _studentCode.text = value!;
       },
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
@@ -140,6 +154,9 @@ class _SignupScreenState extends State<SignupScreen> {
         }
       },
       obscureText: true,
+      onSaved: (value) {
+        _password.text = value!;
+      },
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -203,14 +220,16 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(height: 25),
                 ElevatedButton(
                   onPressed: () async {
-                    final email = _email.text;
-                    final password = _password.text;
+                    // final email = _email.text;
+                    // final password = _password.text;
                     try {
-                      await AuthService.firebase().createUser(
-                        email: email,
-                        password: password,
-                      );
-                      final user = AuthService.firebase().currentUser;
+                      await AuthService.firebase()
+                          .createUser(
+                            email: _email.text,
+                            password: _password.text,
+                          )
+                          .then((value) => {postDetailsToFirestore()});
+                      // postDetailsToFirestore();
                       AuthService.firebase().sendEmailVerification();
                       Navigator.of(context).pushNamed(verifyEmailRoute);
                       // Navigator.of(context).pushNamed(loginRoute);
@@ -290,5 +309,22 @@ class _SignupScreenState extends State<SignupScreen> {
       Progress_bar();
       Navigator.pushNamed(context, loginRoute);
     }
+  }
+
+  postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    // devtools.log("posting");
+    User? user = FirebaseAuth.instance.currentUser;
+    ParentModel parentModel = ParentModel();
+    // writing all the values
+    parentModel.email = user!.email;
+    parentModel.uid = user.uid;
+    parentModel.firstName = _firstName.text;
+    parentModel.studentCode = _studentCode.text;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(parentModel.toMap());
   }
 }

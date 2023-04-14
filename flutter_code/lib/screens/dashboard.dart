@@ -1,4 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/services/auth/auth_service.dart';
@@ -6,10 +8,32 @@ import 'package:flutter_code/utils/routes.dart';
 import 'package:flutter_code/widgets/announcementsSlider.dart';
 import 'package:flutter_code/models/announcementsModel.dart';
 import 'package:flutter_code/widgets/attendanceAssignments.dart';
-import 'package:flutter_code/widgets/attendanceCounter.dart';
+import 'package:flutter_code/models/parentModel.dart';
+import 'dart:developer' as devtools show log;
 
-class DashBoard extends StatelessWidget {
+class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
+
+  @override
+  State<DashBoard> createState() => _DashBoardState();
+}
+
+class _DashBoardState extends State<DashBoard> {
+  User? user = FirebaseAuth.instance.currentUser;
+  ParentModel loggedInUser = ParentModel();
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = ParentModel.fromMap(value.data());
+      // devtools.log(this.loggedInUser.firstName.toString());
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +63,7 @@ class DashBoard extends StatelessWidget {
     final studentName = Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
-        "Student Name",
+        this.loggedInUser.firstName.toString(),
         style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
       ),
     );
@@ -85,9 +109,9 @@ class DashBoard extends StatelessWidget {
                                     await showLogoutDialog(context);
                                 if (shouldLogout) {
                                   await AuthService.firebase().logOut;
-                                 
+
                                   Navigator.of(context).pushNamedAndRemoveUntil(
-                                      loginRoute, (route) => false);
+                                      loginRoute, (_) => false);
                                 }
                               },
                               icon: Icon(
@@ -103,7 +127,7 @@ class DashBoard extends StatelessWidget {
                         image,
                         studentName,
                         Text(
-                          "Student",
+                          "Parent",
                           style: TextStyle(
                               fontSize: 15.0, color: Colors.grey[600]),
                         )
