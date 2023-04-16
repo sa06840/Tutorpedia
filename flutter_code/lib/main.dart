@@ -1,6 +1,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_code/screens/announcements.dart';
+import 'package:flutter_code/screens/announcementDetails.dart';
+import 'package:flutter_code/screens/announcementsScreen.dart';
 import 'package:flutter_code/screens/assignments_corrections.dart';
 import 'package:flutter_code/screens/dashboard.dart';
 import 'package:flutter_code/screens/login_screen.dart';
@@ -64,6 +65,7 @@ void main() {
         dashboardRoute: (context) => DashBoard(),
         loginRoute: (context) => LoginScreen(),
         verifyEmailRoute: (context) => VerifyEmailView(),
+        announcementDetailsRoute: (context) => AnnouncementDetails(),
     },
   ));
 }

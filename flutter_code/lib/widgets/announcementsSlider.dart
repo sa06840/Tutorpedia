@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/models/announcementsModel.dart';
-import 'package:flutter_code/screens/announcements.dart';
+import 'package:flutter_code/screens/announcementsScreen.dart';
+import 'package:flutter_code/services/auth/database.dart';
+import 'package:intl/intl.dart';
 
 class AnnoucementsSlider extends StatefulWidget {
   const AnnoucementsSlider({super.key});
@@ -12,6 +15,76 @@ class AnnoucementsSlider extends StatefulWidget {
 }
 
 class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
+
+  final CollectionReference announcementsList = FirebaseFirestore.instance.collection('announcements');
+  List announcementsObjects = [];
+  List announcements = [];
+
+  @override
+  void initState(){
+    super.initState();
+    fetchAnnouncementsList();
+  }
+
+  Future getAnnouncementsList() async {
+    try {
+      await announcementsList.get().then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          Announcement announcement = Announcement();
+          announcement = Announcement().fromMap(element.data());
+          announcementsObjects.add(announcement);
+        });
+      });
+      return announcementsObjects;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  fetchAnnouncementsList() async {
+    dynamic resultant = await getAnnouncementsList();
+    if (resultant == null){
+      print('Unable to retrieve');
+    } else{
+      setState(() {
+        announcementsObjects= resultant;
+        announcementsObjects.sort((m1, m2) {
+          var r = m1.date.compareTo(m2.date);
+          return r;
+        });
+        announcements = new List.from(announcementsObjects.reversed);
+      });
+    }
+  }
+
+  // List announcements = [];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchAnnouncemnts();
+  // }
+
+  // fetchAnnouncemnts() async{
+  //   dynamic resultant = await Database().getAnnouncementsList();
+  //   if (resultant==null){
+  //     print('Unable to retrieve');
+  //   } else{
+  //     announcements = resultant;
+  //   }
+  // }
+
+  getLength() {
+    var length = 0;
+    if (announcements.length < 5){
+      length = announcements.length;
+    } else{
+      length = 5;
+    }
+    return length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -36,7 +109,7 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Announcements()),
+                            builder: (context) => const AnnouncementsScreen()),
                       );
                     },
                     child: Text(
@@ -63,9 +136,9 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
               color: Colors.transparent,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: announcements.length,
+                itemCount: getLength(),
                 itemBuilder: (BuildContext context, int index) {
-                  Announcement announcement = announcements[index];
+                  // var date = DateTime.fromMillisecondsSinceEpoch(announcements[index].date.seconds * 1000);
                   return Container(
                     margin: EdgeInsets.all(10.0),
                     width: 210.0,
@@ -95,7 +168,8 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    announcement.date,
+                                    // DateFormat('yMMMMd').format(date),
+                                    announcements[index].date,
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w600,
@@ -106,7 +180,8 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
                                     height: 5,
                                   ),
                                   Text(
-                                    announcement.body,
+                                    announcements[index].body,
+                                    // announcements[index]["body"],
                                     style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 12.0,
@@ -142,15 +217,18 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
                             ),
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                              child: Align(
-                                alignment: Alignment.center,
+                              child: Center(
                                 child: Text(
-                                  announcement.header,
+                                  announcements[index].header,
+                                  // announcements[index].["header"],
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 255, 255, 255),
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w600,
-                                    letterSpacing: 1.2,
+                                    letterSpacing: 1,
                                   ),
                                 ),
                               ),

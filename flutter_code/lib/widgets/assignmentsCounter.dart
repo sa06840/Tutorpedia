@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_code/models/parentModel.dart';
 import 'package:flutter_code/models/studentModel.dart';
 import 'package:flutter_code/screens/assignments_corrections.dart';
+import 'package:flutter_code/models/correctionModel.dart';
 
 class AssignmentsCounter extends StatefulWidget {
   const AssignmentsCounter({super.key});
@@ -12,6 +16,60 @@ class AssignmentsCounter extends StatefulWidget {
 }
 
 class _AssignmentsCounterState extends State<AssignmentsCounter> {
+
+  User? user = FirebaseAuth.instance.currentUser;
+  ParentModel loggedInUser = ParentModel();
+
+  final CollectionReference correctionsList = FirebaseFirestore.instance.collection('corrections');
+  var numCorrections = 0;
+
+  @override
+  void initState(){
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = ParentModel.fromMap(value.data());
+      // devtools.log(this.loggedInUser.firstName.toString());
+      setState(() {
+        fetchNumCorrections();
+      });
+    });
+  }
+
+  Future getCorections() async {
+    var corrections = 0;
+    try {
+      await correctionsList.get().then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          Correction correction = Correction();
+          correction = Correction().fromMap(element.data());
+          if (correction.studentCode.toString() == this.loggedInUser.studentCode.toString()){
+            corrections += 1;
+          }
+        });
+      });
+      return corrections;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  fetchNumCorrections() async {
+    dynamic resultant = await getCorections();
+    if (resultant == null){
+      print('Unable to retrieve');
+    } else{
+      setState(() {
+        numCorrections = resultant;
+      });
+    }
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -134,7 +192,8 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
                             Padding(
                               padding: EdgeInsets.fromLTRB(0,10,0,5),
                               child: Text(
-                                "${std.numberofCorrections}",
+                                // "${std.numberofCorrections}",
+                                numCorrections.toString(),
                                 style: TextStyle(
                                   fontSize: 30.0,
                                   color: Color.fromARGB(255, 251,137,1)

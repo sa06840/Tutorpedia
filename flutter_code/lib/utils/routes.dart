@@ -14,3 +14,4 @@ const  dashboardRoute = "/dashboard";
 const announcementsRoute = "/announcements";
 const verifyEmailRoute ="/verify-email /";
 // const registerRoute = "/register";
+const announcementDetailsRoute = "/announcementDetails";

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/models/parentModel.dart';
@@ -269,7 +269,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             color: Color.fromARGB(255, 25, 28, 50),
                           )),
                       TextSpan(
-                          text: "Register here!",
+                          text: "Login here!",
                           style: TextStyle(
                             color: Color.fromARGB(255, 25, 28, 50),
                             fontSize: 16.0,

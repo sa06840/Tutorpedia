@@ -19,6 +19,8 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
+
+
   User? user = FirebaseAuth.instance.currentUser;
   ParentModel loggedInUser = ParentModel();
   @override
@@ -33,7 +35,9 @@ class _DashBoardState extends State<DashBoard> {
       // devtools.log(this.loggedInUser.firstName.toString());
       setState(() {});
     });
+
   }
+
 
   @override
   Widget build(BuildContext context) {
