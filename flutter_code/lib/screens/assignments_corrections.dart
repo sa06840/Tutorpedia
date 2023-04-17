@@ -5,11 +5,11 @@ import 'package:flutter_code/models/assignmentsModel.dart';
 import 'package:flutter_code/models/correctionModel.dart';
 import 'package:flutter_code/models/parentModel.dart';
 
-class Assignment {
+class AssignmentTemp {
   final String title;
   final DateTime dueDate;
 
-  Assignment({required this.title, required this.dueDate});
+  AssignmentTemp({required this.title, required this.dueDate});
 }
 
 class CorrectionTemp {
@@ -45,6 +45,7 @@ class _AssignmentsAndCorrectionsScreenState extends State<AssignmentsAndCorrecti
       // devtools.log(this.loggedInUser.firstName.toString());
       setState(() {
         fetchCorrections();
+        fetchAssignments();
       });
     });
   }
@@ -80,10 +81,52 @@ class _AssignmentsAndCorrectionsScreenState extends State<AssignmentsAndCorrecti
           var r = m1.dueDate.compareTo(m2.dueDate);
           return r;
         });
-        corrections = new List.from(correctionObjects.reversed);
+        // corrections = new List.from(correctionObjects.reversed);
+        corrections = correctionObjects;
       });
     }
   }
+
+  final CollectionReference assignmentsList = FirebaseFirestore.instance.collection('assignments');
+  List assignmentObjects = [];
+  List assignments = [];
+
+  Future getAssignmentObjects() async {
+    try {
+      await assignmentsList.get().then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          Assignment assignment = Assignment();
+          assignment = Assignment().fromMap(element.data());
+          if (assignment.studentCode.toString() == this.loggedInUser.studentCode.toString()){
+            assignmentObjects.add(assignment);
+          }
+        });
+      });
+      return assignmentObjects;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  fetchAssignments() async {
+    dynamic resultant = await getAssignmentObjects();
+    if (resultant == null){
+      print('Unable to retrieve');
+    } else{
+      setState(() {
+        assignmentObjects = resultant;
+        assignmentObjects.sort((m1, m2) {
+          var r = m1.dueDate.compareTo(m2.dueDate);
+          return r;
+        });
+        // assignments = new List.from(assignmentObjects.reversed);
+        assignments = assignmentObjects;
+      });
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +154,11 @@ class _AssignmentsAndCorrectionsScreenState extends State<AssignmentsAndCorrecti
               itemCount: assignments.length > 10 ? 5 : assignments.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title: Text(assignments[index].title),
+                  title: Text(assignments[index].header.toString()),
                   subtitle: Text('Due: ${assignments[index].dueDate}'),
                   trailing: Text(
-                    'Missing',
+                    // 'Missing',
+                    assignments[index].grade.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.red,

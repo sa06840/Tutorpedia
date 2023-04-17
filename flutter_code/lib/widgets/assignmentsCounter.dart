@@ -7,6 +7,9 @@ import 'package:flutter_code/models/parentModel.dart';
 import 'package:flutter_code/models/studentModel.dart';
 import 'package:flutter_code/screens/assignments_corrections.dart';
 import 'package:flutter_code/models/correctionModel.dart';
+import 'package:intl/intl.dart';
+
+import '../models/assignmentsModel.dart';
 
 class AssignmentsCounter extends StatefulWidget {
   const AssignmentsCounter({super.key});
@@ -21,7 +24,7 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
   ParentModel loggedInUser = ParentModel();
 
   final CollectionReference correctionsList = FirebaseFirestore.instance.collection('corrections');
-  var numCorrections = 0;
+  var numberOfCorrections = 0;
 
   @override
   void initState(){
@@ -35,23 +38,24 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
       // devtools.log(this.loggedInUser.firstName.toString());
       setState(() {
         fetchNumCorrections();
+        fetchNumAssignments();
       });
     });
   }
 
   Future getCorections() async {
-    var corrections = 0;
+    var numCorrections = 0;
     try {
       await correctionsList.get().then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
           Correction correction = Correction();
           correction = Correction().fromMap(element.data());
           if (correction.studentCode.toString() == this.loggedInUser.studentCode.toString()){
-            corrections += 1;
+            numCorrections += 1;
           }
         });
       });
-      return corrections;
+      return numCorrections;
     } catch (e) {
       print(e.toString());
       return null;
@@ -64,11 +68,45 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
       print('Unable to retrieve');
     } else{
       setState(() {
-        numCorrections = resultant;
+        numberOfCorrections = resultant;
       });
     }
   }
-  
+
+  final CollectionReference assignmentsList = FirebaseFirestore.instance.collection('assignments');
+  var numberOfAssignments = 0;
+
+  Future getAssignments() async {
+    var numAssignments = 0;
+    try {
+      await assignmentsList.get().then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          Assignment assignment = Assignment();
+          assignment = Assignment().fromMap(element.data());
+          if (assignment.studentCode.toString() == this.loggedInUser.studentCode.toString()){
+            numAssignments += 1;
+          }
+        });
+      });
+      return numAssignments;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  fetchNumAssignments() async {
+    dynamic resultant = await getAssignments();
+    if (resultant == null){
+      print('Unable to retrieve');
+    } else{
+      setState(() {
+        numberOfAssignments = resultant;
+      });
+    }
+  }
+
+  String currentDate = DateFormat('yMMMMd').format(DateTime.now());  
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +167,8 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
                       ),
                       child: Center(
                         child: Text(
-                          "Date till Today",
+                          // "Date till Today",
+                          currentDate,
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -159,7 +198,8 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
                             Padding(
                               padding: EdgeInsets.fromLTRB(0,10,0,5),
                               child: Text(
-                                "${std.numberofAssignments}",
+                                // "${std.numberofAssignments}",
+                                numberOfAssignments.toString(),
                                 style: TextStyle(
                                   fontSize: 30.0,
                                   color: Color.fromARGB(255, 46,137,1)
@@ -193,7 +233,7 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
                               padding: EdgeInsets.fromLTRB(0,10,0,5),
                               child: Text(
                                 // "${std.numberofCorrections}",
-                                numCorrections.toString(),
+                                numberOfCorrections.toString(),
                                 style: TextStyle(
                                   fontSize: 30.0,
                                   color: Color.fromARGB(255, 251,137,1)

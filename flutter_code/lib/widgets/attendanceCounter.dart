@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_code/models/studentModel.dart';
+import 'package:intl/intl.dart';
 
 class AttendanceCounter extends StatefulWidget {
   const AttendanceCounter({super.key});
@@ -11,6 +12,9 @@ class AttendanceCounter extends StatefulWidget {
 }
 
 class _AttendanceCounterState extends State<AttendanceCounter> {
+
+  String currentDate = DateFormat('yMMMMd').format(DateTime.now());  
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -64,7 +68,8 @@ class _AttendanceCounterState extends State<AttendanceCounter> {
                       ),
                       child: Center(
                         child: Text(
-                          "Date till Today",
+                          // "Date till Today",
+                          currentDate,
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
