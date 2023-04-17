@@ -5,19 +5,6 @@ import 'package:flutter_code/models/assignmentsModel.dart';
 import 'package:flutter_code/models/correctionModel.dart';
 import 'package:flutter_code/models/parentModel.dart';
 
-class AssignmentTemp {
-  final String title;
-  final DateTime dueDate;
-
-  AssignmentTemp({required this.title, required this.dueDate});
-}
-
-class CorrectionTemp {
-  final String title;
-  final DateTime dueDate;
-
-  CorrectionTemp({required this.title, required this.dueDate});
-}
 
 class AssignmentsAndCorrectionsScreen extends StatefulWidget {
   @override
@@ -161,7 +148,9 @@ class _AssignmentsAndCorrectionsScreenState extends State<AssignmentsAndCorrecti
                     assignments[index].grade.toString(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.red,
+                      color: assignments[index].status == 'pending' ? Colors.orange : 
+           assignments[index].status == 'graded' ? Colors.green :
+           Colors.red, 
                     ),
                   ),
                 );

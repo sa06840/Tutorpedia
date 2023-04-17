@@ -8,7 +8,7 @@ import 'package:flutter_code/models/studentModel.dart';
 import 'package:flutter_code/screens/assignments_corrections.dart';
 import 'package:flutter_code/models/correctionModel.dart';
 import 'package:intl/intl.dart';
-
+import 'dart:developer' as devtools show log;
 import '../models/assignmentsModel.dart';
 
 class AssignmentsCounter extends StatefulWidget {
@@ -50,8 +50,10 @@ class _AssignmentsCounterState extends State<AssignmentsCounter> {
         querySnapshot.docs.forEach((element) {
           Correction correction = Correction();
           correction = Correction().fromMap(element.data());
+          // devtools.log(this.loggedInUser.studentCode.toString());
           if (correction.studentCode.toString() == this.loggedInUser.studentCode.toString()){
             numCorrections += 1;
+            
           }
         });
       });

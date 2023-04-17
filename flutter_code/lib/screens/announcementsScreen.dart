@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/models/announcementsModel.dart';
-import 'package:flutter_code/services/auth/database.dart';
-import 'package:flutter_code/widgets/announcementsSlider.dart';
-import 'package:intl/intl.dart';
 
 
 class AnnouncementsScreen extends StatefulWidget {

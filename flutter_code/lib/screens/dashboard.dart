@@ -1,15 +1,12 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/services/auth/auth_service.dart';
 import 'package:flutter_code/utils/routes.dart';
 import 'package:flutter_code/widgets/announcementsSlider.dart';
-import 'package:flutter_code/models/announcementsModel.dart';
 import 'package:flutter_code/widgets/attendanceAssignments.dart';
 import 'package:flutter_code/models/parentModel.dart';
-import 'dart:developer' as devtools show log;
+
 
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});

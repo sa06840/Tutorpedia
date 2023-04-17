@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/models/announcementsModel.dart';
 import 'package:flutter_code/screens/announcementsScreen.dart';
-import 'package:flutter_code/services/auth/database.dart';
-import 'package:intl/intl.dart';
 
 class AnnoucementsSlider extends StatefulWidget {
   const AnnoucementsSlider({super.key});

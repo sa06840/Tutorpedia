@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/models/parentModel.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_code/services/auth/auth_service.dart';
 import 'package:flutter_code/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_code/utils/show_error_dialog.dart';
-import 'package:flutter_code/screens/verify_email_view.dart';
 
 
 class SignupScreen extends StatefulWidget {
@@ -78,7 +76,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 color: Color.fromARGB(225, 25, 28, 50),
                 width: 2.0,
               )),
-          hintText: "First Name"),
+          hintText: "Full Name"),
     );
 
     // email name

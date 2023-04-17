@@ -1,40 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-// class AssignmentTemp {
-//   final String title;
-//   final String dueDate;
-
-//   AssignmentTemp({required this.title, required this.dueDate});
-// }
-
-// List<AssignmentTemp> assignmentss = [
-//   AssignmentTemp(
-//     title: 'Assignment 1',
-//     dueDate: 'March 25, 2023',
-//   ),
-//   AssignmentTemp(
-//     title: 'Assignment 2',
-//     dueDate: 'April 5, 2023',
-//   ),
-//   AssignmentTemp(
-//     title: 'Assignment 3',
-//     dueDate: 'April 10, 2023',
-//   ),
-//   AssignmentTemp(
-//     title: 'Assignment 4',
-//     dueDate: 'May 2, 2023',
-//   ),
-//    AssignmentTemp(
-//     title: 'Assignment 5',
-//     dueDate: 'April 10, 2023',
-//   ),
-//   AssignmentTemp(
-//     title: 'Assignment 6',
-//     dueDate: 'May 2, 2023',
-//   ),
-// ];
-
 
 class Assignment {
   String? assignmentid;

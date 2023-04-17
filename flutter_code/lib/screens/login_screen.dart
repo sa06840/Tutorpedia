@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_code/services/auth/auth_exceptions.dart';
 import 'package:flutter_code/services/auth/auth_service.dart';
 import 'package:flutter_code/utils/routes.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_code/utils/show_error_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
