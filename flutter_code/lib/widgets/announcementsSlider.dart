@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/models/announcementsModel.dart';
+import 'package:flutter_code/screens/announcementDetails.dart';
 import 'package:flutter_code/screens/announcementsScreen.dart';
 
 class AnnoucementsSlider extends StatefulWidget {
@@ -135,20 +136,75 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
                 itemCount: getLength(),
                 itemBuilder: (BuildContext context, int index) {
                   // var date = DateTime.fromMillisecondsSinceEpoch(announcements[index].date.seconds * 1000);
-                  return Container(
-                    margin: EdgeInsets.all(10.0),
-                    width: 210.0,
-                    color: Color.fromARGB(0, 0, 0, 0),
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          bottom: 15.0,
-                          child: Container(
-                            height: 120.0,
-                            width: 210.0,
+                  return GestureDetector(
+                    onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            AnnouncementDetails(announcement: announcements[index]),
+                      ),
+                    );
+                  },
+                    child: Container(
+                      margin: EdgeInsets.all(10.0),
+                      width: 210.0,
+                      color: Color.fromARGB(0, 0, 0, 0),
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned(
+                            bottom: 15.0,
+                            child: Container(
+                              height: 120.0,
+                              width: 210.0,
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    offset: Offset(0.0, 2.0),
+                                    blurRadius: 6.0,
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      // DateFormat('yMMMMd').format(date),
+                                      announcements[index].date,
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.2,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      announcements[index].body,
+                                      // announcements[index]["body"],
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12.0,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 255, 255, 255),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(20.0),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black26,
@@ -157,81 +213,37 @@ class _AnnoucementsSliderState extends State<AnnoucementsSlider> {
                                 ),
                               ],
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    // DateFormat('yMMMMd').format(date),
-                                    announcements[index].date,
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 1.2,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    announcements[index].body,
-                                    // announcements[index]["body"],
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12.0,
-                                    ),
+                            child: Container(
+                              width: 210.0, // set the width of the rectangle
+                              height: 120.0, // set the height of the rectangle
+                              decoration: BoxDecoration(
+                                // color: Color.fromARGB(255, 248, 171, 111),
+                                color: Color.fromARGB(255, 225, 92, 152),
+                                borderRadius: BorderRadius.circular(
+                                    10.0), // set the border radius of the rectangle
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                                child: Center(
+                                  child: Text(
+                                    announcements[index].header,
+                                    // announcements[index].["header"],
+                                    textAlign: TextAlign.center,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            borderRadius: BorderRadius.circular(20.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0.0, 2.0),
-                                blurRadius: 6.0,
-                              ),
-                            ],
-                          ),
-                          child: Container(
-                            width: 210.0, // set the width of the rectangle
-                            height: 120.0, // set the height of the rectangle
-                            decoration: BoxDecoration(
-                              // color: Color.fromARGB(255, 248, 171, 111),
-                              color: Color.fromARGB(255, 225, 92, 152),
-                              borderRadius: BorderRadius.circular(
-                                  10.0), // set the border radius of the rectangle
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                              child: Center(
-                                child: Text(
-                                  announcements[index].header,
-                                  // announcements[index].["header"],
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 1,
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 1,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },

@@ -59,13 +59,14 @@ void main() {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-    home: const AnnouncementDetails(),
+    home: const HomePage(),
     routes: {
        signupRoute: (context) => SignupScreen(),
         dashboardRoute: (context) => DashBoard(),
         loginRoute: (context) => LoginScreen(),
         verifyEmailRoute: (context) => VerifyEmailView(),
-        announcementDetailsRoute: (context) => AnnouncementDetails(),
+        // announcementsRoute: (context) => AnnouncementsScreen(),
+        // announcementDetailsRoute: (context) => AnnouncementDetails(),
     },
   ));
 }

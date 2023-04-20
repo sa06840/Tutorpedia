@@ -75,17 +75,20 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Attendance'),
+        title: Text('Attendance',
+        style: TextStyle(fontSize: 24),),
         backgroundColor: Color.fromARGB(255, 189, 101, 237),
       ),
       body: ListView(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            padding: EdgeInsets.fromLTRB(30, 24, 16, 16),
             child: Text(
               'Log',
-              style: Theme.of(context).textTheme.headline5,
-              textAlign: TextAlign.center,
+              // style: Theme.of(context).textTheme.headline5,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.start,
+
             ),
           ),
           Divider(thickness: 2),
@@ -100,7 +103,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 return ListTile(
                   // title: Text(attendance[index].header.toString()),
                   title: Text('${attendance[index].dueDate}',style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      // fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),),
                   trailing: Text(

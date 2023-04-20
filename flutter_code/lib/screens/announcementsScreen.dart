@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/models/announcementsModel.dart';
+import 'package:flutter_code/screens/announcementDetails.dart';
 
 
 class AnnouncementsScreen extends StatefulWidget {
@@ -89,7 +90,13 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                 // var date = DateTime.fromMillisecondsSinceEpoch(announcements[index].date.seconds * 1000);
                 return  GestureDetector(
                   onTap: () {
-                    
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            AnnouncementDetails(announcement: announcements[index]),
+                      ),
+                    );
                   },
                   child: Container(
                     height: 125,
