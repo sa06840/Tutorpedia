@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-
-
 class AnnouncementDetails extends StatefulWidget {
-  const AnnouncementDetails({super.key});
+  const AnnouncementDetails({Key? key}) : super(key: key);
 
   @override
   State<AnnouncementDetails> createState() => _AnnouncementDetailsState();
@@ -12,31 +10,37 @@ class AnnouncementDetails extends StatefulWidget {
 class _AnnouncementDetailsState extends State<AnnouncementDetails> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            title: Text('Announcement Details', style: TextStyle(fontSize: 24.0)),
-            backgroundColor: Color.fromARGB(255, 225, 92, 152),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(0,14,0,0),
+    double screenHeight = MediaQuery.of(context).size.height;
+    double cardWidth = MediaQuery.of(context).size.width * 0.8;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Announcement Details', style: TextStyle(fontSize: 24.0)),
+        backgroundColor: Color.fromARGB(255, 225, 92, 152),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(25, 80, 0, 0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Announcement Header',
-                  style: TextStyle(
-                    fontSize: 24,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Announcement Header',
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
                   ),
                 ),
+                SizedBox(height: 16.0),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Row(
                     children: [
                       CircleAvatar(
@@ -53,18 +57,28 @@ class _AnnouncementDetailsState extends State<AnnouncementDetails> {
                     ],
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Card(
-                  margin: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('This is the announcement text.'),
-                  ),
-                ),
               ],
             ),
           ),
-        ),
+          SizedBox(height: 30.0),
+          Container(
+            height: screenHeight * 0.5,
+            child: Card(
+              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              elevation: 5.0, // add a shadow to the card
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Container(
+                  width: cardWidth,
+                  child: Text('This is the announcement text.'),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
