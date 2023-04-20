@@ -7,7 +7,6 @@ import 'package:flutter_code/widgets/announcementsSlider.dart';
 import 'package:flutter_code/widgets/attendanceAssignments.dart';
 import 'package:flutter_code/models/parentModel.dart';
 
-
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
 
@@ -16,8 +15,6 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
-
-
   User? user = FirebaseAuth.instance.currentUser;
   ParentModel loggedInUser = ParentModel();
   @override
@@ -32,9 +29,7 @@ class _DashBoardState extends State<DashBoard> {
       // devtools.log(this.loggedInUser.firstName.toString());
       setState(() {});
     });
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -153,20 +148,50 @@ Future<bool> showLogoutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text("Sign out"),
-        content: const Text("Are you sure you want to sign out?"),
+        title: const Text(
+          "Sign out",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Are you sure you want to sign out?",
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              "You will need to enter your credentials to log back in.",
+              style: TextStyle(fontSize: 14),
+            ),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text("Cancel "),
+            child: const Text(
+              "Cancel",
+              style: TextStyle(fontSize: 16),
+            ),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: const Text("Logout "),
+            child: const Text(
+              "Logout",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       );
