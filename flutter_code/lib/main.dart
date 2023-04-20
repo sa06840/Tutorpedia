@@ -59,7 +59,7 @@ void main() {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-    home: const HomePage(),
+    home: const AnnouncementDetails(),
     routes: {
        signupRoute: (context) => SignupScreen(),
         dashboardRoute: (context) => DashBoard(),

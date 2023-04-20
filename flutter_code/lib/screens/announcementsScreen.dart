@@ -87,81 +87,86 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
               itemCount: announcements.length,
               itemBuilder: (BuildContext context, int index) {
                 // var date = DateTime.fromMillisecondsSinceEpoch(announcements[index].date.seconds * 1000);
-                return Container(
-                  height: 125,
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                  margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ]),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 100.0,
-                        height: 80,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 175, 117, 141),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Column(
-                          children: [
-                            Center(
-                              child: Text(
-                                // announcementss[index].date.toString().substring(
-                                //     0, announcementss[index].date.toString().length - 5),
-                                // DateFormat('yMMMMd').format(date),
-                                announcements[index].date,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            // Text(
-                            //   announcementss[index]
-                            //       .date
-                            //       .toString().substring(announcementss[index].date.toString().length - 4),
-                            //   style: TextStyle(
-                            //       color: Colors.white, fontWeight: FontWeight.bold),
-                            // ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 16.0),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 10.0),
+                return  GestureDetector(
+                  onTap: () {
+                    
+                  },
+                  child: Container(
+                    height: 125,
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                    margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ]),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 100.0,
+                          height: 80,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 175, 117, 141),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                announcements[index].header,
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 204, 48, 118),
-                                  fontSize: 18.0, fontWeight: FontWeight.bold),
+                              Center(
+                                child: Text(
+                                  // announcementss[index].date.toString().substring(
+                                  //     0, announcementss[index].date.toString().length - 5),
+                                  // DateFormat('yMMMMd').format(date),
+                                  announcements[index].date,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.white, fontWeight: FontWeight.bold),
+                                ),
                               ),
-                              SizedBox(height: 10.0),
-                              Text(
-                                announcements[index].body,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                              // Text(
+                              //   announcementss[index]
+                              //       .date
+                              //       .toString().substring(announcementss[index].date.toString().length - 4),
+                              //   style: TextStyle(
+                              //       color: Colors.white, fontWeight: FontWeight.bold),
+                              // ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 16.0),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  announcements[index].header,
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 204, 48, 118),
+                                    fontSize: 18.0, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10.0),
+                                Text(
+                                  announcements[index].body,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
