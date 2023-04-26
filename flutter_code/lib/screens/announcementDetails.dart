@@ -61,7 +61,7 @@ class AnnouncementDetails extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Sajeel Alam'),
+                              Text('Rahim bhai'),
                               Text(announcement.date.toString()),
                             ],
                           ),

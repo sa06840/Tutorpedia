@@ -37,7 +37,7 @@ class _DashBoardState extends State<DashBoard> {
       child: Padding(
         padding: const EdgeInsets.only(left: 36.0),
         child: Text(
-          "CLASS NAME",
+          "SOFTWARE ENGINEERING",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 30, color: Colors.black),
         ),

@@ -8,7 +8,6 @@ import 'package:flutter_code/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_code/utils/show_error_dialog.dart';
 
-
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -52,7 +51,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     // first name field
     final firstNameField = TextFormField(
-       controller: _firstName,
+      controller: _firstName,
       enableSuggestions: false,
       autocorrect: false,
       validator: (value) {
@@ -233,11 +232,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       // Navigator.of(context).pushNamed(loginRoute);
                     } on WeakPasswordAuthException {
                       await showErrorDialog(context, "Weak Password");
-                    } on EmailAlreadyInUseAuthException {
-                      await showErrorDialog(context, "Email is already in use");
                     } on InvalidEmailAuthException {
                       await showErrorDialog(
                           context, "This is an invalid email address");
+                    } on EmailAlreadyInUseAuthException {
+                      await showErrorDialog(context, "Email is already in use");
                     } on GenericAuthException {
                       await showErrorDialog(
                         context,
